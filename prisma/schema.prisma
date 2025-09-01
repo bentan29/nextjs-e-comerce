@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Size {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+  XXXXL
+}
+
+enum Gender {
+  men
+  women
+  kid
+  unisex
+}
+
+enum Role {
+  admin
+  user
+}
+
+model Category {
+  id    String  @id @default(uuid())
+  name  String  @unique
+
+  // Relaciones
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float    @default(0)
+  slug        String   @unique
+  tags        String[] @default([])
+  gender      Gender
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relaciones
+  category    Category     @relation(fields: [categoryId], references: [id])
+  categoryId  String
+
+  sizesStock  ProductSize[] // ← relación con talles y stock
+  images      ProductImage[]
+  orderItems  OrderItem[]
+
+  @@index([gender])
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  url       String
+
+  // Relaciones
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model ProductSize {
+  id        String   @id @default(uuid())
+  size      Size
+  stock     Int      @default(0)
+
+  // Relaciones
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+
+  @@unique([productId, size]) // Un tamaño por producto
+}
+
+model User {
+  id            String @id @default(uuid())
+  name          String
+  email         String @unique
+  emailVerified DateTime @default(now())
+  password      String
+  role          Role @default(user)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  //- Relaciones
+  address       UserAddress? //- Tiene un solo address
+  orders        Order[] //- Puede tener muchas ordenes
+}
+
+model UserAddress {
+  id          String @id @default(uuid())
+  firstName   String?
+  lastName    String?
+  address     String?
+  address2    String?
+  postalCode  String?
+  phone       String?
+
+  //- Relaciones
+  user        User @relation(fields: [userId], references: [id])
+  userId      String @unique
+  
+  province   Province? @relation(fields: [province_id], references: [id])
+  province_id  String?
+
+  city        City? @relation(fields: [city_id], references: [id])
+  city_id     String?
+}
+
+model Province {
+  id          String @id
+  name        String @unique
+
+  //- Relaciones
+  cities      City[]
+  userAddress UserAddress[]
+  orderAddress OrderAddress[]
+}
+
+model City {
+  id          String @id @default(uuid())
+  name        String
+
+  //- Relaciones
+  province      Province @relation(fields: [id_state], references: [id])
+  id_state      String
+  userAddress   UserAddress[]
+  orderAddress  OrderAddress[]
+}
+
+model Order {
+  id            String @id @default(uuid())
+  subTotal      Float
+  tax           Float
+  total         Float
+  itemsInOrder  Int
+  isPaid        Boolean @default(false)
+  paidAt        DateTime?
+  isConfirmed   Boolean  @default(false)
+  confirmedAt   DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  //- Relaciones
+  user  User @relation(fields: [userId], references: [id])
+  userId String
+
+  orderItems OrderItem[]
+  orderAddress OrderAddress?
+
+  //? transactionId es el id de la transaccion del tercero que usemos, paypal, stripe, etc
+  transactionId String?
+}
+
+model OrderItem {
+  id          String @id @default(uuid())
+  quantity    Int
+  price       Float
+  size        Size
+
+  //- Relaciones
+  order       Order @relation(fields: [orderId], references: [id])
+  orderId     String
+
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String
+}
+
+model OrderAddress {
+  id          String @id @default(uuid())
+  firstName   String
+  lastName    String
+  address     String
+  address2    String?
+  postalCode  String
+  phone       String
+
+  //- Relaciones
+  province    Province @relation(fields: [province_id], references: [id])
+  province_id String
+
+  city        City @relation(fields: [city_id], references: [id])
+  city_id     String
+
+  order       Order @relation(fields: [orderId], references: [id])
+  orderId     String @unique
+}
+
+
+

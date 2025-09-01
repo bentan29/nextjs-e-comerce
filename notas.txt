@@ -1,0 +1,74 @@
+# NOTAS
+
+1. Docker. Lo usamos para hacer las conexiones con la base de datos
+    a. Creamos en la raiz del proyecto el archivo "docker-compose.yml" 
+        y lo configuramos para que use postgres
+
+    b. Creamos el archivo ".env" y agregamos las variables de entorno
+        para la base de datos
+
+    c. En la consola ejecutamos el comando "docker-compose up -d" 
+        para iniciar el contenedor de postgres.
+        Esto nos va a crear la carpeta de postgress donde se aloja la data.
+        Y tambien deberiamos ya de verlo en el Docker Desktop.
+
+2. Hacemos una copia del .env a .env.template por que los archivos de ambiente
+    no se suben a ningun repositorio.
+    
+3. agregamos al .gitignore el archivo .env y /postgres/
+
+4. Prisma. 
+    https://www.prisma.io/  
+    https://www.prisma.io/docs/guides/nextjs
+
+    a. Lo instalamos 
+        "npm install prisma tsx --save-dev"
+        "npm install @prisma/extension-accelerate @prisma/client"
+
+    b. Lo inicializamos, esto crea la carpeta "prisma" y el archivo "schema.prisma"
+        "npx prisma init --datasource-provider PostgreSQL"
+
+    c. Creamos los modelos en el archivo "schema.prisma" y los migramos a la base de datos
+        "npx prisma migrate dev --name NombreMigracion"
+
+    d. Generamos el cliente de prisma, esto nos da acceso a los comandos de prisma
+        "npx prisma generate"
+
+    e. Creamos el archivo "prisma.ts" en la carpeta "src/lib", lo configuramos para que use la base de datos
+
+
+### Autenticacion
+
+    1. Instalamos next-auth
+        "npm install next-auth@beta"
+
+    2. Creamos el archivo "auth.ts" en la carpeta "src"
+
+
+
+########### Implementacion PayPal
+    1. Creamos la nueva columna en la tabla de ordes "transactionId"
+
+    2. Vamos a Paypal.com en la parte de desarrollador y creamos un nuevo proyecto.
+        Eso nos da el "client id" y el "secret", los cuales agregamos al archivo .env
+    
+    3. Vamos dentro del PayPal a "Testing Tools -> Sandbox Accounts" y creamos una nueva cuenta
+        - usamos este mail "sb-lz4ww45164816@personal.example.com"
+        - constrasña "A12345678"
+    
+    4. Instalamos el PayPal Button para react
+        https://www.npmjs.com/package/@paypal/react-paypal-js
+        
+        - "npm i @paypal/react-paypal-js"
+
+        - Creamos un Provider para el PayPal dentro de los Providers
+        - Creamos el archivo "PayPalButton.tsx" en la carpeta "src/components"
+        - Configuramos el PayPalButton dentro de (shop)/user/orders/[id]
+
+
+########### Implementacion de Socket io
+    1. Instalaciones 
+        "npm install socket.io socket.io-client"
+
+
+
