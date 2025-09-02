@@ -1,6 +1,5 @@
 export * from "./product/sheet-product/SheetProduct"
 export * from "./product/product-form/ProductFormShadcn"
-export * from "./product/product-form/ProductForm"
 export * from "./product/product-image/ProductImage"
 export * from "./common/PageNotFound"
 export * from "./dashboard/AppAreaChart"
