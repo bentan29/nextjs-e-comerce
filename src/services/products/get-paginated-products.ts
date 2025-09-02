@@ -1,5 +1,5 @@
-import { Gender } from "@/generated/prisma"
-import { Product, ProductImage } from "@/interfaces";
+
+import { Gender, Product, ProductImage } from "@/interfaces";
 import prisma from "@/lib/prisma"
 
 interface PaginationOptions {
