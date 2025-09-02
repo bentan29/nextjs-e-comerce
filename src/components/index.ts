@@ -26,7 +26,7 @@ export * from "./shop/sliderBar/SliderBar"
 export * from "./shop/sliderBar/SliderApp"
 export * from "./product/add-favourite/AddFavourite"
 export * from "./product/size-selector/SizeSelector"
-export * from "./product/add-to-cart/AddToCart"
+// export * from "./product/add-to-cart/AddToCart"
 
 export * from "./providers/Providers"
 export * from "./providers/ThemeProvider"
