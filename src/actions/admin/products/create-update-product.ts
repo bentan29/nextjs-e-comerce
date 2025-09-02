@@ -4,6 +4,7 @@ import { Gender, Product } from "@/generated/prisma"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import z from "zod"
+import { Prisma } from "@prisma/client";
 
 //- Cloudinary
 import { v2 as cloudinary } from 'cloudinary';
@@ -66,7 +67,7 @@ export const createUpdateProduct = async (formData: FormData) => {
         
         const {id, ...restProduct} = product; //- Verificamos si tenemos un id para editar o crear
         
-        const prismaTx = await prisma.$transaction(async (tx) => {
+        const prismaTx = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
 
             let product: Product;
             //- Convertimos el string de tags a un array de strings
