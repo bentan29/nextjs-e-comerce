@@ -1,27 +1,28 @@
 'use server'
 
 import { auth } from "@/auth";
-import prisma from "@/lib/prisma"
+// import prisma from "@/lib/prisma"
 
 export const getOrderById = async (id: string) => {
 
     //*- Tomamos la session desde el servidor
-    // const session = await auth();
-    // const userId = session?.user?.id;
+    const session = await auth();
+    const userId = session?.user?.id;
 
-    // if(!userId) {
-    //     return {
-    //         ok: false,
-    //         message: 'Unauthorized'
-    //     }
-    // }
+    if(!userId) {
+        return {
+            ok: false,
+            message: 'Unauthorized'
+        }
+    }
 
     try {
-
+        // Import dinámico de Prisma
+        const { default: prisma } = await import('@/lib/prisma');
         const order = await prisma.order.findUnique({
             where: {
                 id, 
-                // userId
+                userId
             },
             include: {
                 orderAddress: true,
