@@ -1,6 +1,6 @@
 'use server'
 
-import { Product } from "@/interfaces";
+import { Product, ProductImage } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export const getProducts = async () => {
@@ -14,9 +14,9 @@ export const getProducts = async () => {
             }
         });
 
-        return products.map(product => ({
+        return products.map((product: Product) => ({
             ...product,
-            images: product.images.map((img) => img.url),
+            images: product.images.map((img: ProductImage) => img.url),
         })) as Product[]
         
     } catch (error) {

@@ -8,7 +8,7 @@ export interface Product{
   tags: string[];
   gender: "men" | "women" | "kid" | "unisex";
   // categoryId: string;
-  images?: string[]
+  images: ProductImage[]
   category: Category;
   sizesStock: SizeStock[];
 }

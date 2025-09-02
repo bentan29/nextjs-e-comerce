@@ -1,5 +1,6 @@
 'use server'
 
+import { ProductImage } from "@/interfaces";
 import prisma from "@/lib/prisma"
 
 export const getProductBySlug = async (slug: string) => {
@@ -31,7 +32,7 @@ export const getProductBySlug = async (slug: string) => {
 
         return {
             ...product,
-            images: product.images.map(image => image.url)
+            images: product.images.map((image: ProductImage) => image.url)
         }        
     } catch (error) {
         console.log(error);
