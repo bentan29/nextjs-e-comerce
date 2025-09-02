@@ -77,7 +77,10 @@ export const getOrderById = async (id: string) => {
         //     }
         // }
 
-        return order;
+        return {
+            ok: true, 
+            order
+        };
         
     } catch (error) {
         return {

@@ -19,9 +19,9 @@ export default async function OrderIdPage({params}: Props) {
 
     const {id} = await params;
 
-    const order: any = await getOrderById(id);
+    const {order, ok} = await getOrderById(id);
     
-    if(order.ok === false) {
+    if(!ok) {
         return (
             <div className="container mx-auto py-8">
                 <h1 className="text-2xl font-bold">Order not found</h1>
