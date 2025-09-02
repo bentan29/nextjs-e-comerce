@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import type { Address, Size } from "@/interfaces";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma";
 
 //- Interfaz de los productos que vienen del carrito
 interface ProductToOrder {
@@ -51,7 +52,7 @@ export const placeOrder = async ( productsInOrder: ProductToOrder[], address: Ad
     //*--- Totales de Tax, Subtotal y Total que vamos a pagar.
     const {subTotal, tax, total} = productsInOrder.reduce((totals, item) => {
         //- Buscamos el producto en la base de datos
-        const pro = products.find(prod => prod.productId === item.productId);
+        const pro = products.find((prod: any) => prod.productId === item.productId);
         if(!pro) throw new Error(`Product not found ${item.productId}`);
 
         //- Calculamos el subtotal pero con el precio de la base de datos
@@ -69,12 +70,12 @@ export const placeOrder = async ( productsInOrder: ProductToOrder[], address: Ad
     //?--- Creamos la transaccion en la BD -----------------------------
     //- Creamos la transaccion
     try {
-        const prismaTx = await prisma.$transaction(async(tx) => {
+        const prismaTx = await prisma.$transaction(async(tx: Prisma.TransactionClient) => {
 
             //* 1. Actualizamos el stock del producto
-            const updatedProductsPromise = products.map(async(product) => {
+            const updatedProductsPromise = products.map(async(product: any) => {
                 //- Buscamos el producto en el carrito
-                const productInOrder = productsInOrder.find(p => p.idSizeStock === product.id);
+                const productInOrder = productsInOrder.find((p: any) => p.idSizeStock === product.id);
 
                 console.log({productInOrder});
                 
@@ -124,7 +125,7 @@ export const placeOrder = async ( productsInOrder: ProductToOrder[], address: Ad
                                 size: p.size,
                                 productId: p.productId,
                                 // price: products.find(prod => prod.id === p.productId)?.product.price ?? 0
-                                price: products.find(prod => prod.productId === p.productId)?.product.price ?? 0
+                                price: products.find((prod: any) => prod.productId === p.productId)?.product.price ?? 0
 
                             })) 
                         }
