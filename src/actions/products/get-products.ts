@@ -1,7 +1,7 @@
 'use server'
 
 import { Product } from "@/interfaces";
-import prisma from "@/lib/prisma";
+import prisma from "../../lib/prisma";
 
 export const getProducts = async () => {
     try {

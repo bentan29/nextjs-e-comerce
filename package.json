@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "dev:socket": "cross-env NODE_OPTIONS=\"--loader ts-node/esm --trace-warnings --no-warnings\" ts-node server.ts",
-    "build": "next build --no-lint",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node src/seed/seed-database.ts"
@@ -75,6 +75,6 @@
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.4",
-    "typescript": "^5"
+    "typescript": "^5.9.2"
   }
 }

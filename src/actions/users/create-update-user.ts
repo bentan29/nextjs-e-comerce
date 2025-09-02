@@ -1,5 +1,5 @@
 'use server'
-import prisma from "@/lib/prisma";
+import prisma from "../../lib/prisma";
 import { slugify } from "@/lib/slugify";
 import { revalidatePath } from "next/cache";
 import z from "zod";

@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   experimental: {
     typedRoutes: false, // evita que explore rutas automáticamente
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   /* config options here */
   images: {
     remotePatterns:[

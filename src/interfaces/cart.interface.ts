@@ -1,11 +1,11 @@
-interface CartProduct {
-    id: string;
-    title: string;
-    slug: string;
-    image: string;
-    price: number;
-    sizeQuantity: SizeQuantity[];
-}
+// interface CartProduct {
+//     id: string;
+//     title: string;
+//     slug: string;
+//     image: string;
+//     price: number;
+//     sizeQuantity: SizeQuantity[];
+// }
 
 interface SizeQuantity {
     size: string;
