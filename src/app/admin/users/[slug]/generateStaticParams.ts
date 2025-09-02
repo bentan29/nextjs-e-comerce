@@ -1,5 +1,6 @@
 // Esto esta sin uso actualmente ------------- *****
 
+import { User } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export async function generateStaticParams() {
@@ -10,7 +11,7 @@ export async function generateStaticParams() {
         }
     });
 
-    return users.map((user) => ({
+    return users.map((user: User) => ({
         slug: `${user.id}_${slugify(user.name)}`,
     }));
 }
