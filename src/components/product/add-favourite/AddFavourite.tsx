@@ -20,7 +20,7 @@ export const AddFavourite = ({product, className}: Props) => {
             slug: product.slug,
             title: product.title,
             price: product.price,
-            image: product.images![0]
+            image: product.images[0].url
         }
         addDeleteFavourite(favouriteProduct);
     }

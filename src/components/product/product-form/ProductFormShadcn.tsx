@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { createUpdateProduct, deleteProductImage } from "@/actions"
+import {ProductImage as ProductImageInterface} from "@/interfaces"
 import { useProductDialogStore } from "@/store"
 import { toast } from "sonner"
 import { ProductImage } from "@/components"
@@ -78,9 +79,9 @@ export const ProductFormShadcn = ({product, mode, categories}: Props) => {
         categoryId: product?.category?.id ?? '',
         sizesStock: mergedSizesStock,
 
-        images: product?.images?.map((image) => ({
+        images: product?.images?.map((image: ProductImageInterface) => ({
             // id: image.id.toString(),
-            url: image,
+            url: image.url,
         })) ?? [],  
     }
 

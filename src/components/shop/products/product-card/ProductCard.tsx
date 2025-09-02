@@ -13,7 +13,7 @@ interface Props {
 
 export const ProductCard = ({product}: Props) => {
 
-    const [displayImage, setDisplayImage] = useState(product.images?.[0])
+    const [displayImage, setDisplayImage] = useState(product.images?.[0].url)
     
     return (
         <Card className="p-0 relative gap-0 rounded-sm shadow-sm shadow-black border-none overflow-hidden fade-in bg-primary flex flex-col justify-between">
@@ -24,8 +24,8 @@ export const ProductCard = ({product}: Props) => {
                 className="w-full object-cover aspect-square max-h-[450px]"
                 width={500} 
                 height={500}
-                onMouseEnter={() => setDisplayImage(product.images?.[1])} //- Cambiamos la imagen al pasar el mouse.
-                onMouseLeave={() => setDisplayImage(product.images?.[0])}
+                onMouseEnter={() => setDisplayImage(product.images?.[1].url)} //- Cambiamos la imagen al pasar el mouse.
+                onMouseLeave={() => setDisplayImage(product.images?.[0].url)}
             />
 
             <AddFavourite 
