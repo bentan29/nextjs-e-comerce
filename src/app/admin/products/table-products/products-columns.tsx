@@ -4,13 +4,11 @@ import { ProductImage } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Product } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import { useProductDialogStore } from "@/store";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Eye, MoreHorizontal, Pencil, Trash2, UserLock } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { ProductsAction } from "./products-action";
  
@@ -53,7 +51,7 @@ export const productsColumns: ColumnDef<Product>[] = [
               {
                 row.original.images && (
                   <ProductImage
-                      src={row.original.images[0]}
+                      src={row.original.images[0].url}
                       alt={product.title}
                       width={50}
                       height={50}
