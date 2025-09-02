@@ -19,6 +19,7 @@ export const getOrderById = async (id: string) => {
     try {
         // Import dinámico de Prisma
         const { default: prisma } = await import('@/lib/prisma');
+        
         const order = await prisma.order.findUnique({
             where: {
                 id, 
