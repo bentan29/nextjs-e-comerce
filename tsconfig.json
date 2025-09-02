@@ -24,9 +24,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "*"
-      ]
+      "@/*": ["*"]
     }
   },
   "include": [
@@ -36,7 +34,7 @@
     "server.ts",
     "types/**/*.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "src/seed/seed-database.ts"  ],
   "exclude": [
     "node_modules"
   ]

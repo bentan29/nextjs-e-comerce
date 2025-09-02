@@ -1,5 +1,5 @@
 import { Gender } from "@/generated/prisma"
-import prisma from "../../lib/prisma"
+import prisma from "@/lib/prisma"
 
 interface PaginationOptions {
   page?: number,

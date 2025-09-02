@@ -1,6 +1,7 @@
 'use server'
 
-import prisma from "../../lib/prisma"
+import prisma from "@/lib/prisma"
+
 import { AddressFormValues } from "@/schema"
 
 export const setUserAddress = async (address: AddressFormValues, userId: string) => {

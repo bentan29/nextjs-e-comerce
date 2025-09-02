@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from "../../lib/prisma"
+import prisma from "@/lib/prisma"
 
 //- Bsucamos todas las ciudades de tal departamento, 
 // pasandole el id del departamento que queremos

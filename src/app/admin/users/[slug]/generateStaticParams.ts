@@ -1,6 +1,6 @@
 // Esto esta sin uso actualmente ------------- *****
 
-import prisma from "../../lib/prisma";
+import prisma from "@/lib/prisma";
 
 export async function generateStaticParams() {
     const users = await prisma.user.findMany({

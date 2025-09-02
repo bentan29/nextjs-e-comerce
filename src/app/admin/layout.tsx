@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { AppSideBar } from "@/components/dashboard/sidebar/AppSideBar";
 import { Navbar } from "@/components/dashboard/Navbar";

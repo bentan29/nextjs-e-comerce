@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 import type { Address, Size } from "@/interfaces";
-import prisma from "../../lib/prisma";
+import prisma from "@/lib/prisma";
 
 //- Interfaz de los productos que vienen del carrito
 interface ProductToOrder {

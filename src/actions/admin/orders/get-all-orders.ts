@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 // import { auth } from "@/auth";
-import prisma from "../../lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const getAllOrders = async (isConfirmed?: boolean) => {
 
