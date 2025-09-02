@@ -2,6 +2,7 @@ import prisma from '../lib/prisma';
 import { initialData } from './seed';
 import { ciudades } from './seed-ciudades';
 import { departamentos } from './seed-departamentos';
+import { Category } from '../interfaces';
 
 function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -65,7 +66,7 @@ async function main(){
     const categoriesDB = await prisma.category.findMany()
 
     //- Creamos un mapa de categorias para que sea mas facil buscarlas
-    const categoriesMap = categoriesDB.reduce((mapCategory, category) => {
+    const categoriesMap = categoriesDB.reduce((mapCategory : Record<string,string>, category : Category) => {
         mapCategory[category.name.toLowerCase()] = category.id;
         return mapCategory;
         // Record<string,string> es un tipo de objeto que tiene claves y valores de tipo string
