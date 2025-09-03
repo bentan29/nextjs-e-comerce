@@ -44,11 +44,11 @@ export const getRandomProducts = async ({ limit = 5 }: Props) => {
             }
         });
 
-        const final: FinalProduct[] = products.map((prod: FinalProduct) => ({
+        const final: FinalProduct[] = products.map((prod) => ({
             id: prod.id,
             title: prod.title,
             price: prod.price,
-            image: prod.image,
+            image: prod.images[0].url,
             slug: prod.slug
         }));
 

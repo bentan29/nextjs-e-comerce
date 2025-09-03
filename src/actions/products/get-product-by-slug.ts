@@ -32,7 +32,7 @@ export const getProductBySlug = async (slug: string) => {
 
         return {
             ...product,
-            images: product.images.map((image: ProductImage) => image.url)
+            images: product.images.map((image) => image.url)
         }        
     } catch (error) {
         console.log(error);

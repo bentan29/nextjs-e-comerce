@@ -1,10 +1,9 @@
 'use server'
 
-import { Gender, Product } from "@/generated/prisma"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import z from "zod"
-import { Prisma } from "@prisma/client";
+import { Gender, Prisma, Product } from "@prisma/client";
 
 //- Cloudinary
 import { v2 as cloudinary } from 'cloudinary';

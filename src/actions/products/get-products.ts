@@ -1,6 +1,5 @@
 'use server'
 
-import { Product, ProductImage } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export const getProducts = async () => {
@@ -14,10 +13,10 @@ export const getProducts = async () => {
             }
         });
 
-        return products.map((product: Product) => ({
+        return products.map((product) => ({
             ...product,
-            images: product.images.map((img: ProductImage) => img.url),
-        })) as Product[]
+            images: product.images.map((img) => img.url),
+        })) 
         
     } catch (error) {
         throw new Error('No se cargaron los productos')
