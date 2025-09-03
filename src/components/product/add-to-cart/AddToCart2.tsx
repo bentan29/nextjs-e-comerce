@@ -92,7 +92,7 @@ export const AddToCart2 = ({ product }: Props) => {
     return (
         <div className="flex flex-col gap-4 py-4 px-2 lg:px-0">
 
-            <div className="border p-2 w-fit">
+            <div className="border p-2 w-fit mx-auto lg:mx-0">
                 <h3 className="flex gap-2 items-center mb-2 text-lg  font-bold text-muted-foreground">
                     <Ruler size={18}/>Select size
                 </h3>
