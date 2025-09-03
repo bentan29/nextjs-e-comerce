@@ -117,7 +117,7 @@ async function main(){
             prisma.productSize.create({
               data: {
                 size,
-                stock: getRandomInt(1, 12), // ⚡ entre 0 y 10 unidades
+                stock: getRandomInt(10, 15), 
                 productId: createdProduct.id,
               },
             })
@@ -128,7 +128,11 @@ async function main(){
     console.log('Semilla ejecutada');
 }
 
-(() =>{
-    if(process.env.NODE_ENV === 'production') return;
-    main();
-})();
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
