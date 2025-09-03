@@ -9,7 +9,9 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx src/seed/seed-database.ts"
+    "seed": "tsx src/seed/seed-database.ts",
+    "build:server": "tsc src/server.ts --outDir dist"
+
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
