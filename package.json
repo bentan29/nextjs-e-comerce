@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx src/seed/seed-database.ts",
-    "build:server": "tsc src/server.ts --outDir dist"
+    "build:server": "tsc server.ts --outDir dist"
 
   },
   "dependencies": {
