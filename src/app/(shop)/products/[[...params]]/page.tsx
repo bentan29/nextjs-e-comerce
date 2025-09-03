@@ -43,7 +43,7 @@ export default async function Home({searchParams, params}: Props) {
 
 
   return (
-    <div className="container mx-auto flex flex-col gap-4 py-4">
+    <div className="container mx-auto flex flex-col gap-4 py-4 px-2">
 
       {/* Sort options */}
       <Suspense fallback={<p>Loading...</p>}>

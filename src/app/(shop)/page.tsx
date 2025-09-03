@@ -39,7 +39,7 @@ import { Suspense } from "react";
             {/* Slider publicitario con imagenes random de la base de datos */}
             <SliderApp/>
             
-            <div className="container mt-4 mx-auto flex flex-col gap-4 pt-2 pb-8">
+            <div className="container mt-4 mx-auto flex flex-col gap-4 pt-2 pb-8 px-2 lg:px-auto">
                 {/* Sort options */}
                 <Suspense fallback={<p>Loading...</p>}>
                     <SortProducts currentSort={typeof sort === 'string' ? sort : ''}/>
