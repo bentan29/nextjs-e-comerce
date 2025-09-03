@@ -9,12 +9,12 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Loader2Icon, ShieldAlert } from "lucide-react";
 import { LoginFormValues, loginSchema } from "@/schema";
-import { signIn } from "next-auth/react";
+import { signIn, SignInResponse } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
-    // const router = useRouter();
+    const router = useRouter();
     const searchParams = useSearchParams();
     const redirectTo = searchParams.get('redirectTo') || '/';
     
@@ -33,20 +33,21 @@ export const LoginForm = () => {
         setIsLoading(true);
         setError(null);
 
-        const result = await signIn("credentials", {
-            redirect: true,
+        const result: SignInResponse | undefined = await signIn("credentials", {
+            redirect: false, // importante para capturar errores
             email: data.email,
             password: data.password,
-            callbackUrl: redirectTo  // <--- aquí usamos el redirectTo dinámico
+            callbackUrl: redirectTo
         });
-
         setIsLoading(false);
 
-        // if (result?.error) {
-        //     setError("Email o contraseña incorrectos");
-        //     toast.error("Email o contraseña incorrectos");
-        //     form.reset({ password: '' });
-        // }
+        if (result?.error) {
+            setError("Email o contraseña incorrectos");
+            toast.error("Email o contraseña incorrectos");
+            form.reset({ password: '' });
+        } else {
+            router.push(result?.url || redirectTo);
+        }
     }
 
     return (
