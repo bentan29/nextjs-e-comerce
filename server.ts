@@ -1,6 +1,7 @@
 import {createServer} from "node:http";
 import next from "next";
-import {Server} from "socket.io";
+import {Server, Socket} from "socket.io";
+import { IncomingMessage, ServerResponse } from "http";
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = process.env.HOSTNAME || "localhost";
@@ -11,10 +12,16 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 
-    const httpServer = createServer(handle);
+    // const httpServer = createServer(handle);
+    // crear servidor http compatible con Next
+    const httpServer = createServer(
+        (req: IncomingMessage, res: ServerResponse) => {
+            handle(req, res);
+        }
+    );
     const io = new Server(httpServer);
 
-    io.on("connection", (socket) => {
+    io.on("connection", (socket: Socket) => {
         // socket.on("join-update-stock", (productSize: string) => {
         //     socket.join(productSize);
         // })
@@ -26,11 +33,12 @@ app.prepare().then(() => {
         });
 
         // 👉 escuchar cuando se pague una orden
-        socket.on("new-order", (payload) => {
+        socket.on("new-order", (payload: any) => {
             console.log("🟢 Orden recibida:", payload);
             // reenviamos solo a admins
             io.to("admin").emit("new-order", payload);
         });
+
         socket.on("disconnect", () => {
             console.log(`User disconnected: ${socket.id}`);
         });
