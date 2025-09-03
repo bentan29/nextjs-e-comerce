@@ -11,10 +11,13 @@ import { Loader2Icon, ShieldAlert } from "lucide-react";
 import { LoginFormValues, loginSchema } from "@/schema";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
-    const router = useRouter()
+    // const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get('redirectTo') || '/';
+    
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,18 +34,19 @@ export const LoginForm = () => {
         setError(null);
 
         const result = await signIn("credentials", {
-            redirect: false,   // <--- aquí
+            redirect: true,
             email: data.email,
             password: data.password,
+            callbackUrl: redirectTo  // <--- aquí usamos el redirectTo dinámico
         });
-        
-        if (result?.error) {
-            setError("Email o contraseña incorrectos");
-            toast.error("Email o contraseña incorrectos");
-            form.reset({ password: '' });
-        } else {
-            router.push('/');  // redirigir manualmente
-        }
+
+        setIsLoading(false);
+
+        // if (result?.error) {
+        //     setError("Email o contraseña incorrectos");
+        //     toast.error("Email o contraseña incorrectos");
+        //     form.reset({ password: '' });
+        // }
     }
 
     return (
