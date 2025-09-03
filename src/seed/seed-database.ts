@@ -90,7 +90,7 @@ async function main(){
     //     })
     // })
     for (const product of products) {
-        const { type, images, sizes, ...restProduct } = product;
+        const { stock, type, images, sizes, ...restProduct } = product;
       
         const createdProduct = await prisma.product.create({
           data: {
