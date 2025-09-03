@@ -11,6 +11,9 @@ export async function middleware(req: NextRequest) {
 
   const pathname = req.nextUrl.pathname;
 
+  console.log("TOKEN:", token);
+  console.log("PATHNAME:", pathname);
+
   // Si no está logueado, lo mandamos al login
   if (!isLoggedIn) {
     const loginUrl = new URL('/auth/login', req.url);
