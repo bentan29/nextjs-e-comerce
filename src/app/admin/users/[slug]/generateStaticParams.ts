@@ -11,8 +11,8 @@ export async function generateStaticParams() {
         }
     });
 
-    return users.map((user: User) => ({
-        slug: `${user.id}_${slugify(user.name)}`,
+    return users.map((user: Partial<User>) => ({
+        slug: `${user.id}_${slugify(user!.name!)}`,
     }));
 }
 
