@@ -1,7 +1,7 @@
 'use server'
 
 import { auth } from "@/auth";
-// import prisma from "@/lib/prisma"
+import prisma from "@/lib/prisma"
 
 export const getOrderById = async (id: string) => {
 
@@ -18,8 +18,8 @@ export const getOrderById = async (id: string) => {
 
     try {
         // Import dinámico de Prisma
-        const { default: prisma } = await import('@/lib/prisma');
-        
+        // const { default: prisma } = await import('@/lib/prisma');
+
         const order = await prisma.order.findUnique({
             where: {
                 id, 

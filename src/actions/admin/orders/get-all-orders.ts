@@ -2,13 +2,13 @@
 
 import { auth } from "@/auth";
 // import { auth } from "@/auth";
-// import prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export const getAllOrders = async (isConfirmed?: boolean) => {
 
     try {
         // Import dinámico de Prisma
-        const { default: prisma } = await import('@/lib/prisma');
+        // const { default: prisma } = await import('@/lib/prisma');
         
         const session = await auth();
         if (session?.user.role !== "admin") throw new Error("Unauthorized");

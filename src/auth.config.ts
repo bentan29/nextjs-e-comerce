@@ -1,7 +1,7 @@
 import { loginSchema } from './schema/loginSchema';
 import Credentials from 'next-auth/providers/credentials';
 import { NextAuthConfig } from "next-auth";
-// import prisma from './lib/prisma';
+import prisma from './lib/prisma';
 import bcrypt from 'bcryptjs';
 
 export const authConfig: NextAuthConfig = {
@@ -51,7 +51,7 @@ export const authConfig: NextAuthConfig = {
                 const { email, password } = parsedCredentials.data;
 
                 // Import dinámico de Prisma
-                const { default: prisma } = await import('@/lib/prisma');
+                // const { default: prisma } = await import('@/lib/prisma');
                 
                 //- Buscamos en DB por correo, el usuario junto a al address
                 const user = await prisma.user.findUnique({
