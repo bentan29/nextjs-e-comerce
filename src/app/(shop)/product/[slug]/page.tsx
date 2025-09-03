@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: Props) {
           />
         </div>
 
-        <div>
+        <div className="px-2">
           <h1 className="font-bold text-4xl">{product.title}</h1>
 
           {/* Género y categoría */}
