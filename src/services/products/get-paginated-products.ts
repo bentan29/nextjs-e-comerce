@@ -1,6 +1,7 @@
 
-import { Gender, Product, ProductImage } from "@/interfaces";
+
 import prisma from "@/lib/prisma"
+import { Gender, Product, ProductImage } from "@prisma/client";
 
 interface PaginationOptions {
   page?: number,
@@ -64,7 +65,7 @@ export const getPaginatedProducts = async ({
       include: {
         images: {
           take: 2,
-          select: { url: true },
+          select: { id: true, url: true, productId: true },
         },
         category: true,
         sizesStock: {
@@ -86,10 +87,11 @@ export const getPaginatedProducts = async ({
     return {
       currentPage: page,
       totalPages,
-      products: products.map((product : Product) => ({
-        ...product,
-        images: product.images.map((img : ProductImage) => img.url),
-      })),
+      products
+      // products: products.map((product) => ({
+      //   ...product,
+      //   images: product.images.map((img) => img.url),
+      // })),
     };
   } catch (error) {
     console.error(error);

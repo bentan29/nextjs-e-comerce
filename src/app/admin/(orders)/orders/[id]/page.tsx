@@ -29,10 +29,11 @@ export default async function OrderIdPage({params}: Props) {
         )
     }
 
-    const {orderItems, isConfirmed} = order;
+    // const {orderItems, isConfirmed} = order;
 
-    const productInCart: CartProduct[] = orderItems.map((orderItem: any) => {
+    const productInCart: CartProduct[] = order?.orderItems?.map((orderItem: any) => {
         return {
+            idProduct: orderItem.product.id,
             idSizeStock: orderItem.idSizeStock,
             slug: orderItem.product.slug,
             title: orderItem.product.title,
@@ -41,7 +42,7 @@ export default async function OrderIdPage({params}: Props) {
             quantity: orderItem.quantity,
             image: orderItem.product.images[0].url,
         }
-    })
+      }) || [];
 
 
     return (
@@ -55,7 +56,7 @@ export default async function OrderIdPage({params}: Props) {
                         Order ID : <span className="text-yellow-500 bg-yellow-500/5 px-3 rounded-sm w-full">{id}</span>
                     </h1>
                     <p className="text-muted-foreground"><span className="font-semibold">
-                        Date of purchase :  </span> {order.createdAt.toLocaleString()}
+                        Date of purchase :  </span> {order?.createdAt.toLocaleString()}
                     </p>
                 </div>
 
@@ -67,22 +68,22 @@ export default async function OrderIdPage({params}: Props) {
 
                         <div className={cn(
                             "flex items-center gap-2 border px-2 py-1 rounded-sm", 
-                            isConfirmed 
+                            order?.isConfirmed 
                                 ? "text-green-500 border-green-500/30 bg-green-500/5" 
                                 : "text-red-500 border-red-500/30 bg-red-500/5"
                             )}
                         >
                             {/* Switch con opcion para confirmar o cancelar el pedido */}
                             <ConfirmOrder 
-                                orderConfirm={isConfirmed} 
-                                orderId={order.id}
+                                orderConfirm={order?.isConfirmed ?? false} 
+                                orderId={order?.id ?? ""}
                             />
 
-                            <p className="text-xs">{isConfirmed ? "Confirmed" : "Not Confirmed"}</p>
+                            <p className="text-xs">{order?.isConfirmed ? "Confirmed" : "Not Confirmed"}</p>
                         </div>
                     </div>
 
-                    <OrderStatus isPaid={order.isPaid ?? false}/>
+                    <OrderStatus isPaid={order?.isPaid ?? false}/>
                 </div>
 
             </div>
@@ -97,18 +98,18 @@ export default async function OrderIdPage({params}: Props) {
                 {/* --------- Resumen del pedido --------- */}
                 <div className="text-black w-full h-fit bg-primary-foreground p-2 rounded-sm">
                     <PaymentData
-                        firstName={order.orderAddress.firstName}
-                        lastName={order.orderAddress.lastName}
-                        address={order.orderAddress.address}
-                        address2={order.orderAddress.address2}
-                        postalCode={order.orderAddress.postalCode}
-                        phone={order.orderAddress.phone}
-                        itemsInCart={order.itemsInOrder}
-                        subTotal={order.subTotal}
-                        tax={order.tax}
-                        total={order.total}
-                        city_id={order.orderAddress.city_id}
-                        province_id={order.orderAddress.province_id}
+                        firstName={order?.orderAddress?.firstName || ""}
+                        lastName={order?.orderAddress?.lastName || ""}
+                        address={order?.orderAddress?.address || ""}
+                        address2={order?.orderAddress?.address2 || ""}
+                        postalCode={order?.orderAddress?.postalCode || ""}
+                        phone={order?.orderAddress?.phone || ""}
+                        itemsInCart={order!.itemsInOrder}
+                        subTotal={order!.subTotal}
+                        tax={order!.tax}
+                        total={order!.total}
+                        city_id={order!.orderAddress!.city_id}
+                        province_id={order!.orderAddress!.province_id}
                     />
                 </div>
 

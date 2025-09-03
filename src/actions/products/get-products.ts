@@ -12,11 +12,13 @@ export const getProducts = async () => {
                 category: true
             }
         });
-
-        return products.map((product) => ({
-            ...product,
-            images: product.images.map((img) => img.url),
-        })) 
+        
+        return products
+        
+        // return products.map((product) => ({
+        //     ...product,
+        //     images: product.images.map((img) => img.url),
+        // })) 
         
     } catch (error) {
         throw new Error('No se cargaron los productos')
