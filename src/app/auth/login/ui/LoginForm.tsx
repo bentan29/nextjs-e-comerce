@@ -16,6 +16,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 export const LoginForm = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const redirectTo = searchParams.get('redirectTo') || '/';
     
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +37,7 @@ export const LoginForm = () => {
             redirect: false, // importante para capturar errores
             email: data.email,
             password: data.password,
-            callbackUrl: "/"
+            callbackUrl: redirectTo
         });
         setIsLoading(false);
 
@@ -44,7 +45,9 @@ export const LoginForm = () => {
             setError("Email o contraseña incorrectos");
             toast.error("Email o contraseña incorrectos");
             form.reset({ password: '' });
-        } 
+        } else {
+            router.push(result?.url || redirectTo);
+        }
     }
 
     return (
