@@ -15,15 +15,15 @@ export async function middleware(req: NextRequest) {
   // console.log("PATHNAME:", pathname);
 
   // Si no está logueado, lo mandamos al login
-  // if (!isLoggedIn) {
-  //   const loginUrl = new URL('/auth/login', req.url);
-  //   loginUrl.searchParams.set("redirectTo", req.nextUrl.pathname);
-  //   return NextResponse.redirect(loginUrl);
-  // }
+  if (!isLoggedIn) {
+    const loginUrl = new URL('/auth/login', req.url);
+    loginUrl.searchParams.set("redirectTo", req.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
-  // if(pathname.startsWith('/admin') && token?.role !== "admin") {
-  //   return NextResponse.redirect(new URL("/", req.url)); // lo mandamos al home
-  // }
+  if(pathname.startsWith('/admin') && token?.role !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url)); // lo mandamos al home
+  }
 
   // Si está logueado, dejo pasar
   return NextResponse.next();

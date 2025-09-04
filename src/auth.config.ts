@@ -32,9 +32,11 @@ export const authConfig: NextAuthConfig = {
             return token;
         },
 
-        session({session, token, user}) {
-            session.user = token.data as any; //- Agregamos el usuario que guardamos en el token.data al session.user
-            session.user.role = token.role;
+        async session({ session, token }) {
+            if (token) {
+              session.user.id = token.id as string;
+              session.user.role = token.role as string; // 👈 pasamos el rol a la session
+            }
             return session;
         }
     },
