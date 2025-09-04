@@ -11,8 +11,8 @@ export async function middleware(req: NextRequest) {
 
   const pathname = req.nextUrl.pathname;
 
-  console.log("TOKEN:", token);
-  console.log("PATHNAME:", pathname);
+  // console.log("TOKEN:", token);
+  // console.log("PATHNAME:", pathname);
 
   // Si no está logueado, lo mandamos al login
   if (!isLoggedIn) {
@@ -21,9 +21,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if(pathname.startsWith('/admin') && token?.role !== "admin") {
-    return NextResponse.redirect(new URL("/", req.url)); // lo mandamos al home
-  }
+  // if(pathname.startsWith('/admin') && token?.role !== "admin") {
+  //   return NextResponse.redirect(new URL("/", req.url)); // lo mandamos al home
+  // }
 
   // Si está logueado, dejo pasar
   return NextResponse.next();
