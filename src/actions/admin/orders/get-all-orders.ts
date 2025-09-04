@@ -1,7 +1,6 @@
 'use server'
 
 import { auth } from "@/auth";
-// import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 
 export const getAllOrders = async (isConfirmed?: boolean) => {
@@ -9,7 +8,7 @@ export const getAllOrders = async (isConfirmed?: boolean) => {
     try {
         
         const session = await auth();
-        if (session?.user.role !== "admin") throw new Error("Unauthorized");
+        if (session!.user.role !== "admin") throw new Error("Unauthorized");
 
         const orders = await prisma.order.findMany({
             where: {
