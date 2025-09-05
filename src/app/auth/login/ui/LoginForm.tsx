@@ -37,7 +37,6 @@ export const LoginForm = () => {
             redirect: false, // importante para capturar errores
             email: data.email,
             password: data.password,
-            callbackUrl: redirectTo
         });
         setIsLoading(false);
 
@@ -45,9 +44,11 @@ export const LoginForm = () => {
             setError("Email o contraseña incorrectos");
             toast.error("Email o contraseña incorrectos");
             form.reset({ password: '' });
-        } else {
-            router.push(result?.url || redirectTo);
-        }
+            return;
+        } 
+            
+        router.push(redirectTo);
+        
     }
 
     return (
