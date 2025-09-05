@@ -12,14 +12,15 @@ export const authConfig: NextAuthConfig = {
     },
 
     callbacks: {
-
         authorized({ auth, request: { nextUrl } }) {
             console.log({auth});
             const isLoggedIn = !!auth?.user;
             const isOnCheckout = nextUrl.pathname.startsWith("/checkout");
+
             if (isOnCheckout && !isLoggedIn) {
-                return Response.redirect(new URL("/auth/login?redirectTo=/checkout/address", nextUrl));
-                // Redirigir al login si el usuario no está autenticado y quiere acceder a /checkout
+                return Response.redirect(
+                    new URL("/auth/login?redirectTo=/checkout/address", nextUrl)
+                );
             }
           return true;
         },
@@ -28,15 +29,15 @@ export const authConfig: NextAuthConfig = {
             if(user) {
                 token.id = user.id;   //- Agregamos el id al token
                 // token.data = user; //- Agregamos el usuario al token
-                token.role = user.role || 'user'; // Guardás el rol en el token
+                token.role = user.role; // Guardás el rol en el token
             }
             return token;
         },
 
         async session({ session, token }) {
             if (token) {
-              session.user.id = token.id as string;
-              session.user.role = token.role as string; // 👈 pasamos el rol a la session
+                session.user.id = token.id as string;
+                session.user.role = token.role as "admin" | "user"; // 👈 tipamos explícito
             }
             return session;
         }
