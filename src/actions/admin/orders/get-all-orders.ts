@@ -7,8 +7,8 @@ export const getAllOrders = async (isConfirmed?: boolean) => {
 
     try {
         
-        const session = await auth();
-        if (session!.user.role !== "admin") throw new Error("Unauthorized");
+        // const session = await auth();
+        // if (session!.user.role !== "admin") throw new Error("Unauthorized");
 
         const orders = await prisma.order.findMany({
             where: {
