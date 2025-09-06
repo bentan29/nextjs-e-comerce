@@ -45,7 +45,7 @@ export const SliderBar3 = ({ prod }: Props) => {
             <SwiperSlide key={product.id}>
               <Link
                 href={`/product/${product.slug}`}
-                className="group relative block rounded-3xl overflow-hidden
+                className="group relative block rounded-md overflow-hidden
                   bg-white/10 backdrop-blur-md border border-white/20 shadow-lg
                   hover:shadow-[0_0_25px_rgba(168,85,247,0.8)] transition-all duration-500"
               >
