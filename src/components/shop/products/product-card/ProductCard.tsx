@@ -43,7 +43,7 @@ export const ProductCard = ({product}: Props) => {
                 <CardContent className="px-2 mb-2">
                     <CardDescription className="flex items-center justify-between text-blue-700">
                         <span className="font-extrabold text-3xl">${product.price}</span>
-                        <span className="font-bold text-lg bg-blue-500/20 px-1.5 rounded-md">{product.category?.name} / {product.gender}</span>
+                        <span className="font-bold text-sm lg:text-lg bg-blue-500/20 px-1.5 rounded-md">{product.category?.name} / {product.gender}</span>
                     </CardDescription>
                 </CardContent>
             </Link>

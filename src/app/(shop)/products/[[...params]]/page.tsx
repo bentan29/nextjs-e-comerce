@@ -1,7 +1,6 @@
 export const revalidate = 5;
 export const dynamic = 'force-dynamic';
 
-
 import { PaginationShop, ProductGrid, ProductNotFound, SortProducts } from "@/components";
 import { Gender } from "@/interfaces";
 import { getPaginatedProducts } from "@/services";
@@ -9,16 +8,33 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 interface Props {
-  params: Promise<{ gender?: string; category?: string }>;
-  searchParams: Promise<{ page?: string; sort?: string; search?: string }>;
+  params: Promise<{ params?: string[] }>;
+  searchParams: Promise<{ 
+    page?: string; 
+    sort?: string; 
+    search?: string 
+  }>;
 }
 
-export default async function Home({searchParams, params}: Props) {
+// interface Props {
+//   params: { 
+//     params?: string[];
+//   };
+//   searchParams: { 
+//     page?: string; 
+//     sort?: string; 
+//     search?: string 
+//   };
+// }
 
-  const { gender, category } = await params;
-  const {page, sort, search} = await searchParams;
+export default async function Home({searchParams, params }: Props) {
 
-  const pageParam = Number((await searchParams)?.page);
+  const { params: paramArray } = await params;
+  const {page, sort, search} =  await searchParams;
+  
+  const [gender, category] = paramArray ?? [];
+
+  const pageParam = Number(( await searchParams)?.page);
   const currentPage = !isNaN(pageParam) && pageParam > 0 ? pageParam : 1;
 
   //-Validación de género si viene
@@ -45,6 +61,9 @@ export default async function Home({searchParams, params}: Props) {
   return (
     <div className="container mx-auto flex flex-col gap-4 py-4 px-2">
 
+      <p>Gender:{gender}</p>
+      <p>category:{category}</p>
+
       {/* Sort options */}
       <Suspense fallback={<p>Loading...</p>}>
         <SortProducts currentSort={typeof sort === 'string' ? sort : ''}/>
@@ -55,9 +74,12 @@ export default async function Home({searchParams, params}: Props) {
         products={products}
       />
 
-      {/* 👇 Suspense para PaginationShop */}
+      {/* Suspense para la PaginationShop */}
       <Suspense fallback={<div>Cargando paginación...</div>}>
-        <PaginationShop totalPages={totalPages} currentPage={currentPage} />
+        <PaginationShop 
+          totalPages={totalPages} 
+          currentPage={currentPage} 
+        />
       </Suspense>
 
     </div>

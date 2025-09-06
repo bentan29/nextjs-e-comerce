@@ -22,8 +22,6 @@ export * from "./shop/products/product-card/ProductCard"
 export * from "./shop/products/sort-products/SortProducts"
 export * from "./shop/products/slideshow/ProductSlideshow"
 export * from "./shop/products/slideshow/ProductMobileSlideshow"
-export * from "./shop/sliderBar/SliderBar"
-export * from "./shop/sliderBar/SliderApp"
 export * from "./product/add-favourite/AddFavourite"
 export * from "./product/size-selector/SizeSelector"
 // export * from "./product/add-to-cart/AddToCart"
@@ -49,8 +47,14 @@ export * from "./shop/navbar/search-filter/SearchFilter"
 export * from "./shop/footer/Footer"
 
 export * from "./shop/sidebar/SideBarAccordion"
-
 export * from "./common/ProductNotFound"
+
+export * from "./shop/sliderBar/SliderApp"
+export * from "./shop/sliderBar/SliderBar"
+export * from "./shop/sliderBar/SlideBar2"
+export * from "./shop/sliderBar/SlideBar3"
+
+
 
 
 

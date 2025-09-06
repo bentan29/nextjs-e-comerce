@@ -58,7 +58,7 @@ export const getRandomProducts = async ({ limit = 5 }: Props) => {
         };
 
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         return {
             ok: false,
             message: 'Error to get random products'
