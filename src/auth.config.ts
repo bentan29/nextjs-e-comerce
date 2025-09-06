@@ -48,19 +48,18 @@ export const authConfig: NextAuthConfig = {
             async authorize(credentials) {
 
                 const parsedCredentials = loginSchema.safeParse(credentials)
+                
                 if (!parsedCredentials.success) {
                     console.error("CredentialsSignin", parsedCredentials.error.format());
                     return null;
                 }
                 const { email, password } = parsedCredentials.data;
-
-                // Import dinámico de Prisma
-                // const { default: prisma } = await import('@/lib/prisma');
                 
                 //- Buscamos en DB por correo, el usuario junto a al address
                 const user = await prisma.user.findUnique({
                     where: {email: email.toLowerCase()},
                 })
+
                 if(!user) return null;
 
                 //- Comparar contraseñas
@@ -68,7 +67,6 @@ export const authConfig: NextAuthConfig = {
 
                 //- Retornar el usuario, Excepto el password, lo quitamos
                 const {password:_ , ...rest} = user;
-
                 return rest;
             }
         })
