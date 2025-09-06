@@ -94,14 +94,12 @@ const ImageWithPreload = ({
   return (
     <div className="relative w-full h-72">
       {!loaded && (
-        <div className="absolute inset-0 bg-gray-700 animate-pulse rounded-2xl">
-          <div className="h-full w-full bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 animate-[shimmer_1.5s_infinite]" />
-        </div>
+        <div className="absolute inset-0 bg-gray-700 animate-pulse" />
       )}
       <ProductImage
         src={src}
         alt={alt}
-        className={`object-cover object-center w-full h-72 rounded-2xl transition-opacity duration-500 ${
+        className={`object-cover object-center w-full h-72 transition-opacity duration-500 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         width={400}
