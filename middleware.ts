@@ -34,6 +34,6 @@ export const config = {
     '/checkout/:path*', 
     '/user/profile',
     '/user/orders',
-    // "/admin/:path*"   // ahora protegemos todo /admin/*
+    "/admin/:path*"   // ahora protegemos todo /admin/*
   ],
 };
