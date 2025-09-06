@@ -60,10 +60,6 @@ export default async function Home({searchParams, params }: Props) {
 
   return (
     <div className="container mx-auto flex flex-col gap-4 py-4 px-2">
-
-      <p>Gender:{gender}</p>
-      <p>category:{category}</p>
-
       {/* Sort options */}
       <Suspense fallback={<p>Loading...</p>}>
         <SortProducts currentSort={typeof sort === 'string' ? sort : ''}/>

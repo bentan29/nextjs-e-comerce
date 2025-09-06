@@ -9,6 +9,7 @@ interface Props {
   height?: number;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onLoad?: () => void;
 }
 
 export const ProductImage = ({
@@ -20,6 +21,7 @@ export const ProductImage = ({
   height,
   onMouseEnter,
   onMouseLeave,
+  onLoad,
 }: Props) => {
   if (!src) {
     src = "/imgs/placeholder.jpg";
@@ -43,6 +45,7 @@ export const ProductImage = ({
       style={style}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onLoad={onLoad}
     />
   );
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -25,7 +26,6 @@ export const SliderBar3 = ({ prod }: Props) => {
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-cyan-500/40 rounded-full blur-3xl animate-pulse" />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Encabezado futurista */}
         <h2 className="text-center text-4xl md:text-6xl font-extrabold mb-14 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent tracking-wider uppercase">
           🚀 Productos Destacados
         </h2>
@@ -49,13 +49,10 @@ export const SliderBar3 = ({ prod }: Props) => {
                   bg-white/10 backdrop-blur-md border border-white/20 shadow-lg
                   hover:shadow-[0_0_25px_rgba(168,85,247,0.8)] transition-all duration-500"
               >
-                {/* Imagen */}
-                <ProductImage
+                {/* Imagen con preload */}
+                <ImageWithPreload
                   src={product.image}
                   alt={product.title}
-                  className="object-cover object-center w-full h-72 group-hover:scale-110 transition-transform duration-700"
-                  width={400}
-                  height={300}
                 />
 
                 {/* Contenido flotante */}
@@ -74,7 +71,6 @@ export const SliderBar3 = ({ prod }: Props) => {
                       Ver 🚀
                     </span>
                   </div>
-               
                 </div>
               </Link>
             </SwiperSlide>
@@ -82,5 +78,36 @@ export const SliderBar3 = ({ prod }: Props) => {
         </Swiper>
       </div>
     </section>
+  );
+};
+
+/* 🔥 Componente con skeleton shimmer */
+const ImageWithPreload = ({
+  src,
+  alt,
+}: {
+  src: string;
+  alt: string;
+}) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative w-full h-72">
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-700 animate-pulse rounded-2xl">
+          <div className="h-full w-full bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 animate-[shimmer_1.5s_infinite]" />
+        </div>
+      )}
+      <ProductImage
+        src={src}
+        alt={alt}
+        className={`object-cover object-center w-full h-72 rounded-2xl transition-opacity duration-500 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+        width={400}
+        height={300}
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
   );
 };
