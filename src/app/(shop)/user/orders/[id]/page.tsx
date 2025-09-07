@@ -10,10 +10,11 @@ interface Props {
 export default async function OrderSlugPage({params}: Props) {
 
     const {id} = await params;
-
-    const order: any = await getOrderById(id);
     
-    if(order.ok === false) {
+    const orderFetch: any = await getOrderById(id);
+
+    
+    if(orderFetch.ok === false) {
         return (
             <div className="container mx-auto py-8">
                 <h1 className="text-2xl font-bold">Order not found</h1>
@@ -21,9 +22,10 @@ export default async function OrderSlugPage({params}: Props) {
         )
     }
 
-    const {orderItems} = order;
+    const {order} = orderFetch;
 
-    const productInCart: CartProduct[] = orderItems.map((orderItem: any) => {
+
+    const productInCart: CartProduct[] = order.orderItems.map((orderItem: any) => {
         return {
             idSizeStock: orderItem.idSizeStock,
             slug: orderItem.product.slug,

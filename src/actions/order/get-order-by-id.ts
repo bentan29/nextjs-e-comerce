@@ -9,12 +9,12 @@ export const getOrderById = async (id: string) => {
     const session = await auth();
     const userId = session?.user?.id;
 
-    if(!userId) {
-        return {
-            ok: false,
-            message: 'Unauthorized'
-        }
-    }
+    // if(!userId) {
+    //     return {
+    //         ok: false,
+    //         message: 'Unauthorized'
+    //     }
+    // }
 
     try {
         // Import dinámico de Prisma
@@ -23,7 +23,7 @@ export const getOrderById = async (id: string) => {
         const order = await prisma.order.findUnique({
             where: {
                 id, 
-                userId
+                // userId
             },
             include: {
                 orderAddress: true,

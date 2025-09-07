@@ -1,39 +1,39 @@
-import { getToken } from "next-auth/jwt";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+// import { getToken } from "next-auth/jwt";
+// import { NextResponse } from "next/server";
+// import type { NextRequest } from "next/server";
 
-const secret = process.env.NEXTAUTH_SECRET;
+// const secret = process.env.NEXTAUTH_SECRET;
 
-export async function middleware(req: NextRequest) {
+// export async function middleware(req: NextRequest) {
 
-  const token = await getToken({ req, secret }); //-getToken() función de next-auth que lee y valida el JWT de la cookie de sesión.
-  const isLoggedIn = !!token; //- isLoggedIn: será true si hay un token válido (usuario autenticado), o false si no.
+//   const token = await getToken({ req, secret }); //-getToken() función de next-auth que lee y valida el JWT de la cookie de sesión.
+//   const isLoggedIn = !!token; //- isLoggedIn: será true si hay un token válido (usuario autenticado), o false si no.
 
-  const pathname = req.nextUrl.pathname;
+//   const pathname = req.nextUrl.pathname;
 
-  // console.log("TOKEN:", token);
-  // console.log("PATHNAME:", pathname);
+//   // console.log("TOKEN:", token);
+//   // console.log("PATHNAME:", pathname);
 
-  // Si no está logueado, lo mandamos al login
-  if (!isLoggedIn) {
-    const loginUrl = new URL('/auth/login', req.url);
-    loginUrl.searchParams.set("redirectTo", req.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
-  }
+//   // Si no está logueado, lo mandamos al login
+//   if (!isLoggedIn) {
+//     const loginUrl = new URL('/auth/login', req.url);
+//     loginUrl.searchParams.set("redirectTo", req.nextUrl.pathname);
+//     return NextResponse.redirect(loginUrl);
+//   }
 
-  if(pathname.startsWith('/admin') && token?.role !== "admin") {
-    return NextResponse.redirect(new URL("/", req.url)); // lo mandamos al home
-  }
+//   if(pathname.startsWith('/admin') && token?.role !== "admin") {
+//     return NextResponse.redirect(new URL("/", req.url)); // lo mandamos al home
+//   }
 
-  // Si está logueado, dejo pasar
-  return NextResponse.next();
-}
+//   // Si está logueado, dejo pasar
+//   return NextResponse.next();
+// }
 
-export const config = {
-  matcher: [
-    '/checkout/:path*', 
-    '/user/profile',
-    '/user/orders',
-    "/admin/:path*"   // ahora protegemos todo /admin/*
-  ],
-};
+// export const config = {
+//   matcher: [
+//     '/checkout/:path*', 
+//     '/user/profile',
+//     '/user/orders',
+//     "/admin/:path*"   // ahora protegemos todo /admin/*
+//   ],
+// };
