@@ -28,7 +28,7 @@ export const authConfig: NextAuthConfig = {
         async jwt({token, user}) {
             if(user) {
                 token.id = user.id;   //- Agregamos el id al token
-                // token.data = user; //- Agregamos el usuario al token
+                token.data = user; //- Agregamos el usuario al token
                 token.role = user.role; // Guardás el rol en el token
             }
             return token;
