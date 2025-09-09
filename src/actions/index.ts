@@ -42,6 +42,9 @@ export * from "./payments/paypal-payment";
 
 export * from "./admin/orders/get-order-by-user-id";
 
+export * from "./paypal/createPayPalOrder";
+
+
 
 
 

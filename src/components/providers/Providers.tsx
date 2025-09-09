@@ -10,11 +10,17 @@ interface Props {
 
 export const Providers = ({children}: Props) => {    
     return (
-        <PayPalScriptProvider options={{
-            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? '',
-            currency: "USD",
-            intent: "capture"
-        }}>
+        <PayPalScriptProvider
+            options={{
+                clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!, // 🔹 camelCase
+                currency: "USD",
+                intent: "capture",
+                components: "buttons",
+                vault: false,
+                commit: true,
+            }}
+            deferLoading={false}
+        >
             <ThemeProvider  // --- Provedor de Temas oscuro claro
                 attribute="class"
                 defaultTheme="system"

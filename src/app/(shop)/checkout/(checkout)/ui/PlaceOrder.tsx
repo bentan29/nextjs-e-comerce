@@ -46,6 +46,9 @@ export const PlaceOrder = () => {
         //* ----------- Server action ----------------------------
         const resp = await placeOrder(productsToOrder, address);
 
+        console.log(resp);
+        
+
         //-- si tenemos un error
         if(!resp.ok) {
             setIsPlacingOrder(false);

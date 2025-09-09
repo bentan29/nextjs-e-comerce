@@ -1,5 +1,6 @@
 'use server'
 
+import { auth } from "@/auth";
 // import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 
@@ -16,10 +17,10 @@ export const getOrdersPaginationByUser = async({page = 1, take = 5, userId}: Pag
     if(page < 1) page = 1 //-si page es menor a 1
 
     //- Tomamos el usuario de la session
-    // const session = await auth();
-    // const userId = session?.user?.id;
+    const session = await auth();
+    const userIdSession = session?.user?.id;
 
-    if(!userId) {
+    if(!userIdSession) {
         return {
             ok: false,
             message: 'Debe autenticarse'
@@ -29,13 +30,14 @@ export const getOrdersPaginationByUser = async({page = 1, take = 5, userId}: Pag
     try {
 
         const orders = await prisma.order.findMany({
-            where: {userId},
+            where: {userId: userIdSession},
             take: take,
             skip: (page -1) * take,
             orderBy: {
                 createdAt: 'desc'
             },
             select: {
+                userId: true,
                 id: true,
                 createdAt: true,
                 isPaid: true,

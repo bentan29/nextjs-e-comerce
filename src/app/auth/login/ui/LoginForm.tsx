@@ -9,7 +9,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Loader2Icon, ShieldAlert } from "lucide-react";
 import { LoginFormValues, loginSchema } from "@/schema";
-import { signIn } from "next-auth/react";
+import { signIn, SignInResponse } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -33,17 +33,14 @@ export const LoginForm = () => {
         setIsLoading(true);
         setError(null);
 
-        // const result: SignInResponse | undefined = await signIn("credentials", {
-        //     redirect: false, // importante para capturar errores
-        //     email: data.email,
-        //     password: data.password,
-        // });
-
-        const result = await signIn("credentials", {
+        const result: SignInResponse | undefined = await signIn("credentials", {
+            redirect: false, // importante para capturar errores
             email: data.email,
             password: data.password,
-            redirect: false,   // 👈 evita GET redirect automático
-          })
+        });
+
+        console.log(result);
+        
         setIsLoading(false);
 
         if (result?.error) {

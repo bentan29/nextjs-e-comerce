@@ -35,6 +35,7 @@ export default async function OrdersPage({searchParams}: OrdersPageProps) {
 
             <div className="container mt-4 mx-auto flex flex-col gap-4 pt-2 pb-8">
 
+
                 <ListOrders orders={orders}/>
                 
                 {/* 👇 Suspense para PaginationShop */}

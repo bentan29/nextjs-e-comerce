@@ -46,7 +46,7 @@ export const ListOrders = ({orders} : Props) => {
                                 </td>
 
                                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    {order.orderAddress?.firstName + ' ' + order.orderAddress?.lastName}
+                                    {order.orderAddress?.firstName + ' ' + order.orderAddress?.lastName} 
                                 </td>
 
                                 <td className="flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
