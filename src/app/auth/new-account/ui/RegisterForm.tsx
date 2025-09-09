@@ -6,11 +6,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { RegisterFormValues, registerSchema } from "@/schema";
 import { Button } from "@/components/ui/button";
-import { login, registerUser, updateUser } from "@/actions";
+import { createOrUpdateUser, login } from "@/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { User } from "@/interfaces";
-import { LockKeyholeOpen } from "lucide-react";
+import { Loader2Icon, LockKeyholeOpen } from "lucide-react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 
 interface Props {
@@ -18,35 +20,29 @@ interface Props {
 }
 
 export const RegisterForm = ({user}: Props) => {
+
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     
     const form = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
-            id: user?.id || '',
+            id: user?.id ?? null,
             name: user?.name || '',
             email: user?.email || '',
             password: '',
-            newPassword: '',
             confirmPassword: '',
+            newPassword: '',
         }
     })
-
-    // console.log({user})
     
-    const onSubmit = async (data: RegisterFormValues) => {
+    const handleOnSubmit = async (data: RegisterFormValues) => {
+        setIsLoading(true);
 
-        let response;
-
-        // Determinamos si es edición o registro
-        if (user?.id) {
-            response = await updateUser(data);
-        } else {
-            response = await registerUser(data);
-        }
-
+        const response = await createOrUpdateUser(data);
         const {ok, message} = response;
 
+        console.log(response);
 
         if (!ok) {
             toast.error(message || "Ocurrió un error");
@@ -54,52 +50,67 @@ export const RegisterForm = ({user}: Props) => {
         } 
         
         toast.success(message || (user?.id ? "Usuario actualizado" : "Registro exitoso"));
+
+        if (ok) {
+            router.replace('/auth/login');
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(false);
   
         //- Determinamos que contraseña usar para iniciar sesion
         // Si el usuario cambió su contraseña, usamos la nueva; si no, la actual
-        const passwordToLogin = user?.id ? (data.newPassword || data.password) : data.password;
+        //const passwordToLogin = user?.id ? (data.newPassword || data.password) : data.password;
 
-        if (!data.email || !passwordToLogin) {
-            toast.error("Email y contraseña son requeridos para iniciar sesión");
-            return;
-        }
-
-        //- Iniciar sesion con NextAuth
-        const loginResult = await login({
-            email: data.email.toLowerCase(), 
-            password: passwordToLogin
-        });
-
-        if (!loginResult) {
-            toast.error("No se pudo iniciar sesión automáticamente");
-            return;
-        }
-
-        // Si es un registro nuevo, redirigimos a la página principal
-        if (!user?.id) {
-            window.location.replace('/');
-            return;
-        }
-  
-      // Si es edición, refrescamos los Server Components
-      router.refresh();
-
-        // if(user?.id) {
-        //     window.location.reload();
-        // } else {
-        //     window.location.replace('/');
+        // if (!data.email || !passwordToLogin) {
+        //     toast.error("Email y contraseña son requeridos para iniciar sesión");
+        //     return;
         // }
 
-        //signIn('credentials', { redirect: false }); // Actualiza la sesión del cliente
-        //router.push('/'); // Redirige a la página principal
-        //router.refresh(); // Forza una recarga del estado del cliente
-       
+    //     //- Iniciar sesion con NextAuth
+    //     const loginResult = await login({
+    //         email: data.email.toLowerCase(), 
+    //         password: passwordToLogin
+    //     });
+
+    //     if (!loginResult) {
+    //         toast.error("No se pudo iniciar sesión automáticamente");
+    //         return;
+    //     }
+
+    //     // Si es un registro nuevo, redirigimos a la página principal
+    //     if (!user?.id) {
+    //         window.location.replace('/');
+    //         return;
+    //     }
+  
+    //   // Si es edición, refrescamos los Server Components
+    //   router.refresh();
+
+    //     // if(user?.id) {
+    //     //     window.location.reload();
+    //     // } else {
+    //     //     window.location.replace('/');
+    //     // }
+
+    //  signIn('credentials', { redirect: false }); // Actualiza la sesión del cliente
+    //  router.push('/'); // Redirige a la página principal
+    //  router.refresh(); // Forza una recarga del estado del cliente
+
+    }
+
+    const onSubmit = async () => {
+        console.log('hola');
     }
 
 
     return (
+        
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-6">
+
+            <pre>{JSON.stringify(form.formState.errors, null, 2)}</pre>
                 
                 {/* name */}
                 <FormField
@@ -129,40 +140,12 @@ export const RegisterForm = ({user}: Props) => {
                             <FormMessage />
                         </FormItem>
                     )}
-                />
-                
-                {/* password actual - en el caso de que hay que actualizar contraseña*/}
-                {user?.id && (
-                    <>
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel>Your Password</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} type="password"/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                            />
+                />    
 
-                        <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-2 text-xl font-bold whitespace-nowrap">
-                                <LockKeyholeOpen className="w-5 h-5" />
-                                Change Password
-                            </div>
-                            <div className="flex-grow h-px bg-muted-foreground/20" />
-                        </div>
-
-                    </>
-                )}
-
-                {/* new password */}
+                {/* password */}
                 <FormField
                     control={form.control}
-                    name="newPassword"
+                    name="password"
                     render={({field}) => (
                         <FormItem>
                             <FormLabel>{user?.id ? 'New Password' : 'Password'}</FormLabel>
@@ -189,8 +172,18 @@ export const RegisterForm = ({user}: Props) => {
                     )}
                 />
 
-                <Button type="submit" className="cursor-pointer">
-                    {user?.id ? 'Update' : 'Register'}
+                <Button 
+                    type="submit" 
+                    // disabled={isLoading}
+                    className={cn(
+                        'py-2 px-4 transition-all',
+                        isLoading ? 'bg-gray-600 text-white cursor-not-allowed' : 'btn-primary'
+                    )}
+                >
+                    {isLoading 
+                        ? <><Loader2Icon className="animate-spin" /> Loading...</>
+                        : user?.id ? 'Update' : 'Register'
+                    }
                 </Button>
             </form>
         </Form>

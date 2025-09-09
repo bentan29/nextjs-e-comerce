@@ -9,7 +9,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Loader2Icon, ShieldAlert } from "lucide-react";
 import { LoginFormValues, loginSchema } from "@/schema";
-import { signIn, SignInResponse } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -33,16 +33,22 @@ export const LoginForm = () => {
         setIsLoading(true);
         setError(null);
 
-        const result: SignInResponse | undefined = await signIn("credentials", {
-            redirect: false, // importante para capturar errores
+        // const result: SignInResponse | undefined = await signIn("credentials", {
+        //     redirect: false, // importante para capturar errores
+        //     email: data.email,
+        //     password: data.password,
+        // });
+
+        const result = await signIn("credentials", {
             email: data.email,
             password: data.password,
-        });
+            redirect: false,   // 👈 evita GET redirect automático
+          })
         setIsLoading(false);
 
         if (result?.error) {
-            setError("Email o contraseña incorrectos");
-            toast.error("Email o contraseña incorrectos");
+            setError(result.error);
+            toast.error(result.error);
             form.reset({ password: '' });
             return;
         } 

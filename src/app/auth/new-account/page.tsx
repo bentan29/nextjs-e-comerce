@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { RegisterForm } from "./ui/RegisterForm";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { RegisterUserForm } from "./ui/RegisterUserForm";
 
 
 export default function NewAccountPage() {
@@ -20,6 +21,7 @@ export default function NewAccountPage() {
 
                 <CardContent>
                     <RegisterForm />
+                    {/* <RegisterUserForm /> */}
                 </CardContent>
 
                 <CardFooter>

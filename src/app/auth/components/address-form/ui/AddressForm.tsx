@@ -62,14 +62,6 @@ export const AddressForm = ({provinces, cities, userAddress, navigateTo }: Props
         }
     })
 
-    // //- Si existe un address en la DB actualizamos las ciudades
-    // useEffect(() => {
-    //     if (userStoredAddress?.province_id) {
-    //         setIdProvince(userStoredAddress.province_id); // Cargar provincia al inicio
-    //         const filteredCities = cities.filter(city => city.id_state === userStoredAddress.province_id);
-    //         setCitiesProvince(filteredCities);
-    //     }
-    // }, [userStoredAddress]);
     
     //- Si existe un address en el store de Zustand lo cargamos
     useEffect(() => {
@@ -78,12 +70,6 @@ export const AddressForm = ({provinces, cities, userAddress, navigateTo }: Props
             setIdProvince(addressStore.province_id)
         }
     }, [addressStore, idProvince,])
-
-    // useEffect(() => {
-    //     if (!idProvince) return;
-    //     const filteredCities = cities.filter((city) => city.id_state === idProvince);
-    //     setCitiesProvince(filteredCities)
-    // }, [idProvince, cities])
 
 
     const onSubmit = async (data: AddressFormValues) => {
