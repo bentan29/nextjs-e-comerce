@@ -12,6 +12,18 @@ export const authConfig: NextAuthConfig = {
         error: '/auth/error'
     },
 
+    cookies: {
+        sessionToken: {
+          name: `__Secure-next-auth.session-token`,
+          options: {
+            httpOnly: true,
+            sameSite: "lax",
+            path: "/",
+            secure: process.env.NODE_ENV === "production",
+          },
+        },
+      },
+
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
             console.log({auth});
