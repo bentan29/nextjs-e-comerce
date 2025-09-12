@@ -20,7 +20,8 @@ export default auth((req) => {
 export const config = {
   matcher: [
     "/checkout/:path*", 
-    "/user/:path*", 
+    "/user/orders/:path*", 
+    "/user/profile", 
     "/admin/:path*"
   ],
 }
